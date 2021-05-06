@@ -6,12 +6,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <TableLayout
+        android:id="@+id/tableLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".MainActivity">
+        tools:context=".MainActivity"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="-325dp">
 
 
         <TableRow
@@ -22,19 +24,19 @@
                 android:id="@+id/imageView001"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="#7cfc00"/>
+                android:background="#7cfc00" />
 
             <ImageView
                 android:id="@+id/imageView002"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="#87cefa"/>
+                android:background="#87cefa" />
 
             <ImageView
                 android:id="@+id/imageView003"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="#7cfc00"/>
+                android:background="#7cfc00" />
 
         </TableRow>
 
@@ -46,19 +48,19 @@
                 android:id="@+id/imageView004"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="#87cefa"/>
+                android:background="#87cefa" />
 
             <ImageView
                 android:id="@+id/imageView005"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="#7cfc00"/>
+                android:background="#7cfc00" />
 
             <ImageView
                 android:id="@+id/imageView006"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="#87cefa"/>
+                android:background="#87cefa" />
 
         </TableRow>
 
@@ -70,21 +72,32 @@
                 android:id="@+id/imageView007"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="#7cfc00"/>
+                android:background="#7cfc00" />
 
             <ImageView
                 android:id="@+id/imageView008"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="#87cefa"/>
+                android:background="#87cefa" />
 
             <ImageView
                 android:id="@+id/imageView009"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:background="#7cfc00"/>
+                android:background="#7cfc00" />
 
         </TableRow>
     </TableLayout>
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="95dp"
+        android:layout_height="62dp"
+        android:text="スタンプ減らす"
+        android:layout_marginTop="400dp"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

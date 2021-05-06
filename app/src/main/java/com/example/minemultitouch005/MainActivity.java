@@ -14,6 +14,8 @@ import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import java.text.DateFormat;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     int returnData;
 
     SharedPreferences sp;
+    SharedPreferences.Editor editor;
 
     private SoundPool soundPool;
     private int soundOne;
@@ -72,21 +75,27 @@ public class MainActivity extends AppCompatActivity {
         imageView008=findViewById(R.id.imageView008);
         imageView009=findViewById(R.id.imageView009);
 
+        Button button=findViewById(R.id.button);
+
+
+
         //スリープから立ち上がり時にPreferencesに登録したカウント数から、ImageViewを数分だけ表示する
         //Preferncesからカウント数を読み込む
         sp= PreferenceManager.getDefaultSharedPreferences(this);
+        //Preferencesに書き込むための、Editorクラスを取得する
+        editor=sp.edit();
 
         //Preferencesのデータのクリア
         //sp.edit().clear().commit();
 
         int returnData00 = sp.getInt("count", 0);
-        Log.d("CreateOn-ReturnData00", String.valueOf(returnData00));
+        //Log.d("CreateOn-ReturnData00", String.valueOf(returnData00));
 
         //スリープ時から戻った時に以前にタップしたスタンプを表示する
         if(returnData00>0) {
             for (int i = 1; i <= returnData00; i++) {
                 int show_ImageView = getResources().getIdentifier("imageView00" + i, "id", getPackageName());
-                    Log.d("show_ImageView", String.valueOf(show_ImageView));
+                    //Log.d("show_ImageView", String.valueOf(show_ImageView));
                 ImageView show_imageView = findViewById(show_ImageView);
                     //Log.d("show_ImageView", String.valueOf(show_ImageView));
                 show_imageView.setImageResource(R.drawable.img001);
@@ -98,6 +107,43 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }
+
+        //クリックされたらスタンプ数を減らす
+        button.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                //Log.d("onCLick","クリックされました");
+
+                int returnData02=sp.getInt("count",0);
+                //Log.d("returnData02=", String.valueOf(returnData02));
+                SharedPreferences.Editor editor=sp.edit();
+
+            if(returnData02>0){
+
+                //ボタンをクリックして、スタンプを一枚ずつ減らしていく
+                int show_ImageView01=getResources().getIdentifier("imageView00"+returnData02,"id",getPackageName());
+                ImageView show_imageView01=findViewById(show_ImageView01);
+                //Log.d("show_image01=", String.valueOf(show_imageView01));
+                show_imageView01.setImageDrawable(null);
+
+                count=count-1;
+                //ボタンがマイナスになったら、countを０にする
+                if(count==0){
+                    count=0;
+                }
+
+                //書き込むデータを登録する
+                editor.putInt("count",count);
+                //書き込みを確定させる
+                editor.commit();
+
+            }else{
+                count=0;
+                editor.putInt("count",count);
+                editor.commit();
+            }
+
+            }
+        });
 
 
     }
@@ -141,11 +187,12 @@ public class MainActivity extends AppCompatActivity {
 
 
             //◆◇◆◇◆◇アプリ標準のPreferencesを取得する
-            sp= PreferenceManager.getDefaultSharedPreferences(this);
+            //sp= PreferenceManager.getDefaultSharedPreferences(this);
 
+            //現在のcountをPreferenceから読み込む
+            count=sp.getInt("count",0);
             count=count+1;
-            //Preferencesに書き込むための、Editorクラスを取得する
-            SharedPreferences.Editor editor=sp.edit();
+
 
             //書き込むデータを登録する
             editor.putInt("count", count);
