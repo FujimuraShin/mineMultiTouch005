@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Float> y;
 
     int tap_count;
-    int count=1;
+    int count=0;
     int returnData;
 
     SharedPreferences sp;
@@ -71,6 +71,33 @@ public class MainActivity extends AppCompatActivity {
         imageView007=findViewById(R.id.imageView007);
         imageView008=findViewById(R.id.imageView008);
         imageView009=findViewById(R.id.imageView009);
+
+        //スリープから立ち上がり時にPreferencesに登録したカウント数から、ImageViewを数分だけ表示する
+        //Preferncesからカウント数を読み込む
+        sp= PreferenceManager.getDefaultSharedPreferences(this);
+
+        //Preferencesのデータのクリア
+        //sp.edit().clear().commit();
+
+        int returnData00 = sp.getInt("count", 0);
+        Log.d("CreateOn-ReturnData00", String.valueOf(returnData00));
+
+        //スリープ時から戻った時に以前にタップしたスタンプを表示する
+        if(returnData00>0) {
+            for (int i = 1; i <= returnData00; i++) {
+                int show_ImageView = getResources().getIdentifier("imageView00" + i, "id", getPackageName());
+                    Log.d("show_ImageView", String.valueOf(show_ImageView));
+                ImageView show_imageView = findViewById(show_ImageView);
+                    //Log.d("show_ImageView", String.valueOf(show_ImageView));
+                show_imageView.setImageResource(R.drawable.img001);
+            }
+
+            //Preferencesデータが９以上の時は９に固定
+            if(returnData00>9){
+                returnData00=9;
+            }
+
+        }
 
 
     }
@@ -116,6 +143,7 @@ public class MainActivity extends AppCompatActivity {
             //◆◇◆◇◆◇アプリ標準のPreferencesを取得する
             sp= PreferenceManager.getDefaultSharedPreferences(this);
 
+            count=count+1;
             //Preferencesに書き込むための、Editorクラスを取得する
             SharedPreferences.Editor editor=sp.edit();
 
@@ -124,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
             //書き込みを確定する
             editor.commit();
+
 
             //Preferencesからデータを読み込む
             returnData=sp.getInt("count", 0);
@@ -138,10 +167,10 @@ public class MainActivity extends AppCompatActivity {
 
             tap_imageView.setImageResource(R.drawable.img001);
 
-            count=count+1;
 
-            if(count==10){
-                count=1;
+
+            if(count>9){
+                count=0;
             }
 
             //SNSの非同期処理
